@@ -1,2 +1,0 @@
-python 3.7+
-import requests,sys,numpy,hexbytes,csv,bisect,seaborn,copy,os,web3
