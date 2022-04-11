@@ -1,9 +1,19 @@
 # open source repository for paper ``Empirical Analysis of EIP-1559``
-This repository is an open source repository for the data and data collection related code for the paper ``Empirical Analysis of EIP-1559: Transaction Fees, Waiting Time, and Consensus Security``. This paper has been accepted by ACM CCS 2022 and you can find the paper [here](https://arxiv.org/abs/2201.05574).
 
-In this archive we provide the raw data we collected (after compressing), the code for collecting and processing the data, and the processed data for further analysis.
+This repository holds the data and code used for the paper ``Empirical Analysis of EIP-1559: Transaction Fees, Waiting Time, and Consensus Security``. This paper has been accepted by ACM CCS 2022 and you can find the paper [here](https://arxiv.org/abs/2201.05574).
 
-## data
+
+## Summary
+
+Yuxuan: please finish the following summary.
+
+- Waiting time (Section 5.3): File X contains data used for waiting time analysis.
+- Network spikes (Table 4): File X contains data for Table 4.
+- Miner's revenue (Fig 11 & 12): File X contains data for Fig 11 & 12.
+
+## Reproducing results from the raw data
+
+In this archival, we provide the raw data we collected (after compressing), the code for collecting and processing the data, and the processed data for further analysis.
 
 ### ``rawdata``
 
