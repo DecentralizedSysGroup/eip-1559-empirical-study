@@ -25,6 +25,23 @@ The code ``waitingtime.py`` processes the raw data, which generates two files, o
 
 The code ``mev.py`` calls the Flashbots API to obtain data from Flashbots, and combines the data on the Blockchain to generate the source distribution of miner's revenue for each block. The output is saved in the folder ``MEVdata``.
 
+To reproduce the data, you can use the following command.
+
+```bash
+./mev.py --data
+```
+
+When executing the `--data` command, `mev.py` will call the Flashbots API, combining data from Ethereum full nodes (via `web3_api.py`) to generate MEV raw data. This data will be saved in the `MEVdata` folder.
+
 ### ``MEVfig``
 
-The code ``mevpaint.py`` reads the distribution of miner's revenue from ``MEVdata`` and draws pictures and tables. These contents are saved in the ``MEVfig`` folder.
+The code ``mev.py`` reads the distribution of miner's revenue from ``MEVdata`` and draws pictures and tables. These contents are saved in the ``MEVfig`` folder.
+
+In `MEVfig`, you can find figure 11 and figure 12 of our paper. To reproduce the figure, you can use the following command.
+
+```bash
+./mev.py --csv;
+./mev.py --img
+```
+
+When executing the `--csv` command, `mev.py` will read the MEV raw data in the `MEVdata` folder and output a table `MEVfig/MEVdata.csv` with all the data. When executing the `--img` command, `mev.py` will use the file `MEVfig/MEVdata.csv` to draw all the figures.
