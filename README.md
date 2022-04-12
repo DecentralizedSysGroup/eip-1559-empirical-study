@@ -1,44 +1,40 @@
-# open source repository for paper ``Empirical Analysis of EIP-1559``
+# Data & code for Empirical Analysis of EIP-1559
 
-This repository holds the data and code used for the paper ``Empirical Analysis of EIP-1559: Transaction Fees, Waiting Time, and Consensus Security``. This paper has been accepted by ACM CCS 2022 and you can find the paper [here](https://arxiv.org/abs/2201.05574).
+This repository holds the data and code used for the paper "Empirical Analysis of EIP-1559: Transaction Fees, Waiting Time, and Consensus Security" (ACM CCS 2022; online version [here](https://arxiv.org/abs/2201.05574)).
 
 
 ## Summary
 
-- [[click here to download the raw data]](https://eip-1559-waiting-time-data.s3.us-west-002.backblazeb2.com/rawdata.tar.gz). The (compressed) raw data is about 20GB. After downloading it you should create a folder named `compressed/` to store the raw data.
-- Waiting time (Section 5.3): Folder `compressed/` contains raw data used for waiting time analysis. Folder `blockdata/` contains the processed data `blockdata.npy` and a detailed `waitingtime_csv.csv` file.
+- Waiting time (Section 5.3): Folder `blockdata/` contains waiting time data in `blockdata.npy` and `waitingtime_csv.csv`.
 - Network spikes (Table 4 & Figure 10): Folder `spikedata/` contains the data of network spikes.
-- Miner's revenue (Figure 11 & 12): Folder `MEVdata/` contains raw data used for MEV analysis. Folder `MEVfig/` contains a detailed `MEVdata.csv` file and the figures.
+- Miner's revenue (Figure 11 & 12): Folder `MEVdata/` contains data used for MEV analysis. Folder `MEVfig/` contains a detailed `MEVdata.csv` file and the figures.
 
-## Reproducing results from the raw data
+## Reproducing data & graphs
 
-In this archival, we provide the raw data we collected (after compressing), the code for collecting and processing the data, and the processed data for further analysis.
+### Raw mempool data
 
-### ``compressed/``
+Raw mempool data used to calculate waiting time can be downloaded [here (about 20GB)](https://eip-1559-waiting-time-data.s3.us-west-002.backblazeb2.com/rawdata.tar.gz). After downloading it you should create a folder named `compressed/` to store the uncompressed raw data.
 
-[[click here to download the raw data]](https://eip-1559-waiting-time-data.s3.us-west-002.backblazeb2.com/rawdata.tar.gz). The (compressed) raw data is about 20GB. After downloading and uncompressing it you should create a folder named `compressed/` to store the raw data. You can see several ``.txt`` file, each of which indicates the time of receipt of all transactions received by a particular full node within 15 days. For example, the file ``LA_[2021070100,2021071600)_compressed.txt`` means it is the dataset for the full node in LA with time interval from July 1, 2021 to July 16, 2021.
-
-Each line of these files describes a transaction, the following is an example:
+You can see several ``.txt`` files, containing the timestamp of transactions received by a particular full node. For example, the file ``LA_[2021070100,2021071600)_compressed.txt`` contains timestamp collected by our full node in LA between July 1, 2021 and July 16, 2021. Each line of these files describes a transaction. E.g., the following line means that transaction ``0x16...`` is received at Unix timestamp ``1626418821.870``.
 
 ```
 0x16d1f71ef96c9456dc465ee2ce4d106b0dda0d440380c1cdd053c9deb58d8284 1626418821.870
 ```
 
-This line means that the node receives transaction ``0x16...`` at Unix timestamp ``1626418821.870``.
 
-### ``blockdata/``
+### `blockdata/`
 
-The code ``waitingtime.py`` processes the raw data, which generates two files, one is the block information database `blockdetail.npy`, and the other is the detailed transaction waiting time table. These outputs are stored in the `blockdata/` folder.
+The script ``waitingtime.py`` processes the raw data and generates two files: the block information database `blockdetail.npy`, and a detailed transaction waiting time table. Outputs are stored in the `blockdata/` folder.
 
-In the `blockdata/` folder there are three other files `gas_csv.csv`, `timestamp_csv.csv` and `sibling_csv.csv`. These three files record the gas usage, timestamp and sibling count of the blocks respectively, which can be obtained by an Ethereum full node. These files are used to analyze network spikes in the paper.
+In the same folder there are three other files `gas_csv.csv`, `timestamp_csv.csv` and `sibling_csv.csv`, recording the gas usage, timestamp, and sibling count of the blocks respectively, derived from the Ethereum blockchain. These files are used to analyze network spikes in the paper.
 
 ### `spikedata/`
 
-The code `spike.py` reads  `gas_csv.csv`, `timestamp_csv.csv` and `sibling_csv.csv` in `blockdata/` and outputs `avggas.csv` (in `spikedata/` folder). The file `avggas.csv` tells the average gas per second around each block. From this file, we can obtain Figure 10 and Table 4.
+The script `spike.py` reads  `gas_csv.csv`, `timestamp_csv.csv`, and `sibling_csv.csv` in `blockdata/` and outputs `avggas.csv` (in `spikedata/` folder). The file `avggas.csv` tells the average gas per second around each block. From this file, we can obtain Figure 10 and Table 4.
 
 ### ``MEVdata/``
 
-The code ``mev.py`` calls the Flashbots API to obtain data from Flashbots, and combines the data on the Blockchain to generate the source distribution of miner's revenue for each block. The output is saved in the folder ``MEVdata/``.
+`MEVdata` contains the dataset for miner revenue, including Flashbots revenue collected from the Flashbots API, as well as other sources of rewards (including block rewards, uncle rewards, etc).
 
 To reproduce the data, you can use the following command.
 
@@ -50,13 +46,12 @@ When executing the `--data` command, `mev.py` will call the Flashbots API, combi
 
 ### ``MEVfig/``
 
-The code ``mev.py`` reads the distribution of miner's revenue from ``MEVdata/`` and draws pictures and tables. These contents are saved in the ``MEVfig/`` folder.
-
-In `MEVfig`, you can find figure 11 and figure 12 of our paper. To reproduce the figure, you can use the following command.
+The script ``mev.py`` plots data in ``MEVdata/``. The figures (figure 11 and figure 12 of our paper) are saved in the ``MEVfig/`` folder. To reproduce the figure, you can use the following command.
 
 ```bash
-./mev.py --csv;
+./mev.py --csv
 ./mev.py --img
 ```
 
-When executing the `--csv` command, `mev.py` will read the MEV raw data in the `MEVdata` folder and output a table `MEVfig/MEVdata.csv` with all the data. When executing the `--img` command, `mev.py` will use the file `MEVfig/MEVdata.csv` to draw all the figures.
+Specifically, the first command will read the MEV raw data in the `MEVdata` folder and output a table `MEVfig/MEVdata.csv` with all the data. 
+The second command will to draw figures using `MEVfig/MEVdata.csv`.
