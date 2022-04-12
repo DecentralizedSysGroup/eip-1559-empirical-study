@@ -5,7 +5,8 @@ This repository holds the data and code used for the paper ``Empirical Analysis 
 
 ## Summary
 
-- Waiting time (Section 5.3): Folder `rawdata/` contains raw data used for waiting time analysis. Folder `blockdata/` contains the processed data `blockdata.npy` and a detailed `waitingtime_csv.csv` file.
+- [[click here to download the raw data]](https://eip-1559-waiting-time-data.s3.us-west-002.backblazeb2.com/rawdata.tar.gz). The (compressed) raw data is about 20GB. After downloading it you should create a folder named `compressed/` to store the raw data.
+- Waiting time (Section 5.3): Folder `compressed/` contains raw data used for waiting time analysis. Folder `blockdata/` contains the processed data `blockdata.npy` and a detailed `waitingtime_csv.csv` file.
 - Network spikes (Table 4 & Figure 10): Folder `spikedata/` contains the data of network spikes.
 - Miner's revenue (Figure 11 & 12): Folder `MEVdata/` contains raw data used for MEV analysis. Folder `MEVfig/` contains a detailed `MEVdata.csv` file and the figures.
 
@@ -13,9 +14,9 @@ This repository holds the data and code used for the paper ``Empirical Analysis 
 
 In this archival, we provide the raw data we collected (after compressing), the code for collecting and processing the data, and the processed data for further analysis.
 
-### ``rawdata/``
+### ``compressed/``
 
-The compressed raw data are stored in the ``rawdata`` folder. After unzip the archive file ``compressed.zip``, you can see several ``.txt`` file, each of which indicates the time of receipt of all transactions received by a particular full node within 15 days. For example, the file ``LA_[2021070100,2021071600)_compressed.txt`` means it is the dataset for the full node in LA with time interval from July 1, 2021 to July 16, 2021.
+[[click here to download the raw data]](https://eip-1559-waiting-time-data.s3.us-west-002.backblazeb2.com/rawdata.tar.gz). The (compressed) raw data is about 20GB. After downloading and uncompressing it you should create a folder named `compressed/` to store the raw data. You can see several ``.txt`` file, each of which indicates the time of receipt of all transactions received by a particular full node within 15 days. For example, the file ``LA_[2021070100,2021071600)_compressed.txt`` means it is the dataset for the full node in LA with time interval from July 1, 2021 to July 16, 2021.
 
 Each line of these files describes a transaction, the following is an example:
 
